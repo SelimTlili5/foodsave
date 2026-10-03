@@ -8,7 +8,7 @@ import { useAppContext } from '../context/AppContext'
 
 export default function RegisterPage() {
   const { t } = useTranslation()
-  const [form, setForm] = useState({ name: 'Nouvel utilisateur', email: 'new@example.com', phone: '+216 20 111 111', city: 'Tunis' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', city: '' })
   const navigate = useNavigate()
   const { showToast } = useAppContext()
 
@@ -45,7 +45,7 @@ export default function RegisterPage() {
         <form className="mt-6 grid gap-5 md:grid-cols-2" onSubmit={handleSubmit}>
           <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300 md:col-span-2">
             <span>{t('auth.fullName')}</span>
-            <input value={form.name} onChange={(event) => handleChange('name', event.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 outline-none focus:border-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
+            <input value={form.name} placeholder={t('Nom')} onChange={(event) => handleChange('name', event.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 outline-none focus:border-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
           </label>
           <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <span>{t('auth.email')}</span>
