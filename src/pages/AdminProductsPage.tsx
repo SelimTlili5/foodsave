@@ -1,24 +1,27 @@
+import { useTranslation } from 'react-i18next'
 import AdminLayout from '../components/admin/AdminLayout'
 import { products } from '../data/products'
 
 export default function AdminProductsPage() {
+  const { t } = useTranslation()
+
   return (
-    <AdminLayout title="Plats">
+    <AdminLayout title={t('admin.products')}>
       <div className="admin-panel p-5">
         <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-slate-900">Gestion des plats</h2>
-          <button className="btn-primary">Ajouter un plat</button>
+          <h2 className="text-xl font-bold text-slate-900">{t('admin.manageProducts')}</h2>
+          <button className="btn-primary">{t('admin.addProduct')}</button>
         </div>
 
         <div className="overflow-x-auto">
           <table className="min-w-full text-left">
             <thead className="bg-slate-50 text-sm text-slate-600">
               <tr>
-                <th className="px-4 py-3">Plat</th>
-                <th className="px-4 py-3">Restaurant</th>
-                <th className="px-4 py-3">Prix</th>
-                <th className="px-4 py-3">Quantité</th>
-                <th className="px-4 py-3">Statut</th>
+                <th className="px-4 py-3">{t('admin.product')}</th>
+                <th className="px-4 py-3">{t('admin.restaurant')}</th>
+                <th className="px-4 py-3">{t('common.price')}</th>
+                <th className="px-4 py-3">{t('admin.quantity')}</th>
+                <th className="px-4 py-3">{t('admin.status')}</th>
               </tr>
             </thead>
             <tbody>
@@ -28,7 +31,7 @@ export default function AdminProductsPage() {
                   <td className="px-4 py-3 text-slate-600">{product.restaurantId}</td>
                   <td className="px-4 py-3 text-slate-600">{product.salePrice} DT</td>
                   <td className="px-4 py-3 text-slate-600">{product.availableQty}</td>
-                  <td className="px-4 py-3"><span className="rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700">Disponible</span></td>
+                  <td className="px-4 py-3"><span className="rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700">{t('common.available')}</span></td>
                 </tr>
               ))}
             </tbody>

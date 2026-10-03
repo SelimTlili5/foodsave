@@ -1,19 +1,22 @@
+import { useTranslation } from 'react-i18next'
 import AdminLayout from '../components/admin/AdminLayout'
 import { restaurants } from '../data/restaurants'
 
 export default function AdminRestaurantsPage() {
+  const { t } = useTranslation()
+
   return (
-    <AdminLayout title="Restaurants">
+    <AdminLayout title={t('admin.restaurants')}>
       <div className="admin-panel overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full text-left">
             <thead className="bg-slate-50 text-sm text-slate-600">
               <tr>
-                <th className="px-4 py-3">Restaurant</th>
-                <th className="px-4 py-3">Ville</th>
-                <th className="px-4 py-3">Note</th>
-                <th className="px-4 py-3">Statut</th>
-                <th className="px-4 py-3">Actions</th>
+                <th className="px-4 py-3">{t('admin.restaurant')}</th>
+                <th className="px-4 py-3">{t('common.city')}</th>
+                <th className="px-4 py-3">{t('common.note')}</th>
+                <th className="px-4 py-3">{t('admin.status')}</th>
+                <th className="px-4 py-3">{t('admin.view')}</th>
               </tr>
             </thead>
             <tbody>
@@ -30,8 +33,8 @@ export default function AdminRestaurantsPage() {
                   </td>
                   <td className="px-4 py-3 text-slate-600">{restaurant.city}</td>
                   <td className="px-4 py-3 text-slate-600">{restaurant.note}</td>
-                  <td className="px-4 py-3"><span className={`rounded-full px-2 py-1 text-xs font-medium ${restaurant.active ? 'bg-red-50 text-red-700' : 'bg-slate-100 text-slate-700'}`}>{restaurant.active ? 'Actif' : 'Inactif'}</span></td>
-                  <td className="px-4 py-3"><button className="text-sm font-medium text-red-600">Voir</button></td>
+                  <td className="px-4 py-3"><span className={`rounded-full px-2 py-1 text-xs font-medium ${restaurant.active ? 'bg-red-50 text-red-700' : 'bg-slate-100 text-slate-700'}`}>{restaurant.active ? t('admin.active') : t('admin.inactive')}</span></td>
+                  <td className="px-4 py-3"><button className="text-sm font-medium text-red-600">{t('admin.view')}</button></td>
                 </tr>
               ))}
             </tbody>

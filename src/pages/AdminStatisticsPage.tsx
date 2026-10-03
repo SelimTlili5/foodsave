@@ -1,5 +1,6 @@
 import { ArrowUpRight, ChartNoAxesCombined, Sparkles, TrendingUp, Wallet } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import AdminLayout from '../components/admin/AdminLayout'
 import CategorySalesChart from '../components/admin/CategorySalesChart'
 import DailyStatisticsTable from '../components/admin/DailyStatisticsTable'
@@ -30,6 +31,7 @@ const restaurantRevenue = [
 ]
 
 export default function AdminStatisticsPage() {
+  const { t } = useTranslation()
   const [period, setPeriod] = useState<Period>('30D')
 
   const filteredStats = useMemo(() => {
@@ -56,28 +58,28 @@ export default function AdminStatisticsPage() {
     : 0
 
   return (
-    <AdminLayout title="Statistiques">
+    <AdminLayout title={t('admin.statistics')}>
       <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-red-500">Performance globale</p>
-          <h2 className="mt-2 text-2xl font-black text-slate-900">Suivi des performances</h2>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-red-500">{t('admin.globalPerformance')}</p>
+          <h2 className="mt-2 text-2xl font-black text-slate-900">{t('admin.performanceTracking')}</h2>
         </div>
         <DateRangeFilter value={period} onChange={setPeriod} />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Revenu total" value={`${totalRevenue.toFixed(0)} €`} trend={`${revenueTrend >= 0 ? '+' : ''}${revenueTrend.toFixed(1)}%`} icon={Wallet} accent="red" />
-        <StatCard label="Commandes" value={totalOrders.toString()} trend={`${ordersTrend >= 0 ? '+' : ''}${ordersTrend.toFixed(1)}%`} icon={ArrowUpRight} accent="orange" />
-        <StatCard label="Plats vendus" value={totalSoldMeals.toString()} trend="+12,4% vs semaine dernière" icon={ChartNoAxesCombined} accent="yellow" />
-        <StatCard label="Économie client" value={`${totalCustomerSavings.toFixed(0)} €`} trend="Impact positif" icon={Sparkles} accent="red" />
+        <StatCard label={t('admin.totalRevenue')} value={`${totalRevenue.toFixed(0)} €`} trend={`${revenueTrend >= 0 ? '+' : ''}${revenueTrend.toFixed(1)}%`} icon={Wallet} accent="red" />
+        <StatCard label={t('admin.orders')} value={totalOrders.toString()} trend={`${ordersTrend >= 0 ? '+' : ''}${ordersTrend.toFixed(1)}%`} icon={ArrowUpRight} accent="orange" />
+        <StatCard label={t('admin.productsSoldToday')} value={totalSoldMeals.toString()} trend={`+12,4% ${t('admin.lastWeekComparison')}`} icon={ChartNoAxesCombined} accent="yellow" />
+        <StatCard label={t('admin.customerSavings')} value={`${totalCustomerSavings.toFixed(0)} €`} trend={t('admin.positiveImpact')} icon={Sparkles} accent="red" />
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-2">
         <div className="admin-panel p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm text-slate-500">Évolution du chiffre d’affaires</p>
-              <h3 className="mt-1 text-xl font-bold text-slate-900">Revenu par jour</h3>
+              <p className="text-sm text-slate-500">{t('admin.revenueTrend')}</p>
+              <h3 className="mt-1 text-xl font-bold text-slate-900">{t('admin.dailyRevenue')}</h3>
             </div>
             <TrendingUp className="text-red-500" size={18} />
           </div>
@@ -87,8 +89,8 @@ export default function AdminStatisticsPage() {
         <div className="admin-panel p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm text-slate-500">Suivi des commandes</p>
-              <h3 className="mt-1 text-xl font-bold text-slate-900">Volume journalier</h3>
+              <p className="text-sm text-slate-500">{t('admin.ordersMonitoring')}</p>
+              <h3 className="mt-1 text-xl font-bold text-slate-900">{t('admin.dailyVolume')}</h3>
             </div>
             <ArrowUpRight className="text-orange-500" size={18} />
           </div>
@@ -100,8 +102,8 @@ export default function AdminStatisticsPage() {
         <div className="admin-panel p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm text-slate-500">Rotation des plats</p>
-              <h3 className="mt-1 text-xl font-bold text-slate-900">Ventes détaillées</h3>
+              <p className="text-sm text-slate-500">{t('admin.productRotation')}</p>
+              <h3 className="mt-1 text-xl font-bold text-slate-900">{t('admin.detailedSales')}</h3>
             </div>
             <ChartNoAxesCombined className="text-yellow-500" size={18} />
           </div>
@@ -111,8 +113,8 @@ export default function AdminStatisticsPage() {
         <div className="admin-panel p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm text-slate-500">Mix produit</p>
-              <h3 className="mt-1 text-xl font-bold text-slate-900">Répartition par catégorie</h3>
+              <p className="text-sm text-slate-500">{t('admin.productMix')}</p>
+              <h3 className="mt-1 text-xl font-bold text-slate-900">{t('admin.categoryBreakdown')}</h3>
             </div>
           </div>
 
@@ -142,8 +144,8 @@ export default function AdminStatisticsPage() {
         <div className="admin-panel p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm text-slate-500">Détail quotidien</p>
-              <h3 className="mt-1 text-xl font-bold text-slate-900">Table de performance</h3>
+              <p className="text-sm text-slate-500">{t('admin.dailyDetail')}</p>
+              <h3 className="mt-1 text-xl font-bold text-slate-900">{t('admin.performanceTable')}</h3>
             </div>
           </div>
           <DailyStatisticsTable data={filteredStats} />
@@ -152,8 +154,8 @@ export default function AdminStatisticsPage() {
         <div className="admin-panel p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm text-slate-500">Meilleurs revenus</p>
-              <h3 className="mt-1 text-xl font-bold text-slate-900">Top restaurants</h3>
+              <p className="text-sm text-slate-500">{t('admin.topRevenue')}</p>
+              <h3 className="mt-1 text-xl font-bold text-slate-900">{t('admin.topRestaurants')}</h3>
             </div>
           </div>
           <RestaurantSalesChart data={restaurantRevenue} />

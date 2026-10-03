@@ -29,7 +29,7 @@ function App() {
   const { toast } = useAppContext()
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800">
+    <div className="min-h-screen bg-[#fffaf5] text-slate-800 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
       <Navbar />
       <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <Routes>

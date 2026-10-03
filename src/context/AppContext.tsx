@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import i18n from '../i18n'
 import { orders as seedOrders } from '../data/orders'
 import { products } from '../data/products'
 import { restaurants } from '../data/restaurants'
@@ -94,7 +95,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       }
       return [...prev, { productId: product.id, restaurantId: product.restaurantId, quantity }]
     })
-    showToast('Plat ajouté au panier')
+    showToast(i18n.t('toast.productAdded'))
   }
 
   const removeFromCart = (productId: string) => {

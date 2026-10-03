@@ -1,5 +1,6 @@
 import { Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import AdminLayout from '../components/admin/AdminLayout'
 import { orders } from '../data/orders'
 import { restaurants } from '../data/restaurants'
@@ -14,6 +15,7 @@ const statusColors: Record<string, string> = {
 }
 
 export default function AdminOrdersPage() {
+  const { t } = useTranslation()
   const [query, setQuery] = useState('')
 
   const filteredOrders = useMemo(() => {
@@ -26,25 +28,25 @@ export default function AdminOrdersPage() {
   }, [query])
 
   return (
-    <AdminLayout title="Commandes">
+    <AdminLayout title={t('admin.orders')}>
       <div className="admin-panel overflow-hidden">
         <div className="flex flex-col gap-4 border-b border-slate-200 p-5 md:flex-row md:items-center md:justify-between">
           <div className="relative w-full max-w-md">
             <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Rechercher une commande..." className="w-full rounded-full border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none ring-0 transition focus:border-red-300" />
+            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t('common.search')} className="w-full rounded-full border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none ring-0 transition focus:border-red-300" />
           </div>
-          <div className="rounded-full bg-red-50 px-3 py-1.5 text-sm font-medium text-red-700">{filteredOrders.length} commandes</div>
+          <div className="rounded-full bg-red-50 px-3 py-1.5 text-sm font-medium text-red-700">{filteredOrders.length} {t('admin.ordersCount')}</div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="min-w-full text-left">
             <thead className="bg-slate-50 text-sm text-slate-600">
               <tr>
-                <th className="px-5 py-3">Commande</th>
-                <th className="px-5 py-3">Client</th>
-                <th className="px-5 py-3">Restaurant</th>
-                <th className="px-5 py-3">Montant</th>
-                <th className="px-5 py-3">Statut</th>
+                <th className="px-5 py-3">{t('orders.order')}</th>
+                <th className="px-5 py-3">{t('admin.customer')}</th>
+                <th className="px-5 py-3">{t('admin.restaurant')}</th>
+                <th className="px-5 py-3">{t('admin.amount')}</th>
+                <th className="px-5 py-3">{t('admin.status')}</th>
               </tr>
             </thead>
             <tbody>

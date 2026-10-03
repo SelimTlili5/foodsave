@@ -1,13 +1,16 @@
 import { ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { categories } from '../data/categories'
 
 export default function CategoriesPage() {
+  const { t } = useTranslation()
+
   return (
     <div className="space-y-8 pb-12">
       <div className="rounded-[2rem] bg-white p-6 shadow-soft">
-        <h1 className="text-3xl font-black text-slate-900">Catégories</h1>
-        <p className="mt-2 text-slate-600">Explorez les cuisines et trouvez les meilleurs deals près de chez vous.</p>
+        <h1 className="text-3xl font-black text-slate-900">{t('categories.title')}</h1>
+        <p className="mt-2 text-slate-600">{t('categories.subtitle')}</p>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -22,7 +25,7 @@ export default function CategoriesPage() {
               </div>
             </div>
             <div className="flex items-center justify-between p-4 text-sm font-semibold text-slate-700">
-              <span>Découvrir</span>
+              <span>{t('categories.discover')}</span>
               <ArrowRight size={16} />
             </div>
           </Link>

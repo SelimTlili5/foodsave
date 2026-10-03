@@ -1,4 +1,5 @@
 import { ArrowRight, CircleDollarSign, Clock3, Flame, ShoppingBag, ShoppingCart, TrendingUp, UtensilsCrossed, Users } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import AdminLayout from '../components/admin/AdminLayout'
 import { orders } from '../data/orders'
 import { products } from '../data/products'
@@ -35,44 +36,46 @@ const topProducts = products
 const recentSales = sales.slice(0, 5)
 
 export default function AdminDashboardPage() {
+  const { t, i18n } = useTranslation()
+  const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR'
   const revenueToday = sales.reduce((sum, sale) => sum + sale.total, 0)
   const mealsSaved = products.reduce((sum, product) => sum + product.availableQty, 0)
   const todaysAverage = (revenueToday / Math.max(1, sales.length)).toFixed(0)
 
   return (
-    <AdminLayout title="Tableau de bord">
+    <AdminLayout title={t('admin.dashboard')}>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        <StatCard title="Chiffre d’affaires aujourd’hui" value={`${revenueToday.toFixed(0)} DT`} delta="+12,5 % vs hier" icon={<CircleDollarSign size={18} />} tone="red" />
-        <StatCard title="Commandes aujourd’hui" value={`${sales.length} commandes`} delta="+8,4 % vs hier" icon={<ShoppingCart size={18} />} tone="orange" />
-        <StatCard title="Plats vendus aujourd’hui" value={`${sales.reduce((sum, sale) => sum + sale.quantity, 0)} plats`} delta="+15,8 % vs hier" icon={<ShoppingBag size={18} />} tone="amber" />
-        <StatCard title="Économies réalisées" value={`${(sales.reduce((sum, sale) => sum + sale.total * 0.38, 0)).toFixed(0)} DT`} delta="+6,6 %" icon={<TrendingUp size={18} />} tone="orange" />
-        <StatCard title="Repas sauvés" value={`${mealsSaved} repas`} delta="+18,4 %" icon={<Flame size={18} />} tone="red" />
-        <StatCard title="Restaurants actifs" value={`${restaurants.filter((restaurant) => restaurant.active).length}`} delta="12 en ligne" icon={<UtensilsCrossed size={18} />} tone="amber" />
+        <StatCard title={t('admin.revenueToday')} value={`${revenueToday.toFixed(0)} DT`} delta={`+12,5 % ${t('admin.vsYesterday')}`} icon={<CircleDollarSign size={18} />} tone="red" />
+        <StatCard title={t('admin.ordersToday')} value={`${sales.length} ${t('admin.ordersCount')}`} delta={`+8,4 % ${t('admin.vsYesterday')}`} icon={<ShoppingCart size={18} />} tone="orange" />
+        <StatCard title={t('admin.productsSoldToday')} value={`${sales.reduce((sum, sale) => sum + sale.quantity, 0)} ${t('admin.mealsCount')}`} delta={`+15,8 % ${t('admin.vsYesterday')}`} icon={<ShoppingBag size={18} />} tone="amber" />
+        <StatCard title={t('admin.savingsRealized')} value={`${(sales.reduce((sum, sale) => sum + sale.total * 0.38, 0)).toFixed(0)} DT`} delta="+6,6 %" icon={<TrendingUp size={18} />} tone="orange" />
+        <StatCard title={t('admin.mealsSaved')} value={`${mealsSaved} ${t('admin.mealsCount')}`} delta="+18,4 %" icon={<Flame size={18} />} tone="red" />
+        <StatCard title={t('admin.activeRestaurants')} value={`${restaurants.filter((restaurant) => restaurant.active).length}`} delta={`12 ${t('admin.online')}`} icon={<UtensilsCrossed size={18} />} tone="amber" />
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.9fr]">
         <div className="admin-panel p-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-slate-900">Ventes</h2>
-            <div className="rounded-full bg-orange-50 px-2.5 py-1 text-xs font-medium text-orange-700">7 derniers jours</div>
+            <h2 className="text-xl font-bold text-slate-900">{t('admin.sales')}</h2>
+            <div className="rounded-full bg-orange-50 px-2.5 py-1 text-xs font-medium text-orange-700">{t('admin.lastSevenDays')}</div>
           </div>
           <div className="mt-6 flex h-56 items-end gap-3">
             {dailyStatistics.slice(-7).map((item) => (
               <div key={item.date} className="flex flex-1 flex-col items-center gap-2">
                 <div className="w-full rounded-t-2xl bg-gradient-to-t from-red-500 via-orange-400 to-yellow-300" style={{ height: `${(item.revenue / maxRevenue) * 100}%` }} />
-                <span className="text-[10px] text-slate-500">{new Date(item.date).toLocaleDateString('fr-FR', { weekday: 'short' })}</span>
+                <span className="text-[10px] text-slate-500">{new Date(item.date).toLocaleDateString(locale, { weekday: 'short' })}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div className="admin-panel p-5">
-          <h2 className="text-xl font-bold text-slate-900">Performances quotidiennes</h2>
+          <h2 className="text-xl font-bold text-slate-900">{t('admin.dailyPerformance')}</h2>
           <div className="mt-5 space-y-3">
             {dailyStatistics.slice(-5).map((item) => (
               <div key={item.date} className="flex items-center justify-between rounded-2xl bg-slate-50 p-3">
                 <div>
-                  <div className="font-semibold text-slate-900">{new Date(item.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}</div>
+                  <div className="font-semibold text-slate-900">{new Date(item.date).toLocaleDateString(locale, { day: '2-digit', month: 'short' })}</div>
                   <div className="text-xs text-slate-500">{item.orders} commandes</div>
                 </div>
                 <div className="text-right">
@@ -88,7 +91,7 @@ export default function AdminDashboardPage() {
       <div className="mt-6 grid gap-6 xl:grid-cols-2">
         <div className="admin-panel overflow-hidden">
           <div className="border-b border-slate-200 p-5">
-            <h2 className="text-xl font-bold text-slate-900">Restaurants les plus performants</h2>
+            <h2 className="text-xl font-bold text-slate-900">{t('admin.topRestaurants')}</h2>
           </div>
           <div className="divide-y divide-slate-200">
             {topRestaurants.map((entry) => (
@@ -111,7 +114,7 @@ export default function AdminDashboardPage() {
 
         <div className="admin-panel overflow-hidden">
           <div className="border-b border-slate-200 p-5">
-            <h2 className="text-xl font-bold text-slate-900">Plats les plus vendus</h2>
+            <h2 className="text-xl font-bold text-slate-900">{t('admin.topProducts')}</h2>
           </div>
           <div className="divide-y divide-slate-200">
             {topProducts.map(({ product, quantity, revenue }) => (
@@ -136,7 +139,7 @@ export default function AdminDashboardPage() {
       <div className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         <div className="admin-panel overflow-hidden">
           <div className="border-b border-slate-200 p-5">
-            <h2 className="text-xl font-bold text-slate-900">Dernières ventes</h2>
+            <h2 className="text-xl font-bold text-slate-900">{t('admin.recentSales')}</h2>
           </div>
           <div className="divide-y divide-slate-200">
             {recentSales.map((sale) => (

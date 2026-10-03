@@ -7,7 +7,7 @@
   line-height: 1.5;
   font-weight: 400;
   color: #111827;
-  background: #fff7ed;
+  background-color: #fff7ed;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,6 +16,11 @@
 
 html {
   scroll-behavior: smooth;
+  background: #fff7ed;
+}
+
+html.dark {
+  background: #020817;
 }
 
 body {
@@ -24,6 +29,12 @@ body {
   min-height: 100vh;
   background: linear-gradient(180deg, #fffaf5 0%, #fff7ed 100%);
   color: #111827;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html.dark body {
+  background: linear-gradient(180deg, #0f172a 0%, #020817 100%);
+  color: #f8fafc;
 }
 
 * {
@@ -43,19 +54,19 @@ select {
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:from-red-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2;
+    @apply inline-flex items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:from-red-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2 dark:from-red-600 dark:to-orange-500;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full border border-orange-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-orange-300 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2;
+    @apply inline-flex items-center justify-center rounded-full border border-orange-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-orange-300 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-orange-400 dark:hover:text-orange-300;
   }
 
   .container-shell {
-    @apply rounded-3xl border border-orange-100 bg-white p-4 shadow-soft sm:p-6;
+    @apply rounded-3xl border border-orange-100 bg-white p-4 shadow-soft sm:p-6 dark:border-slate-700 dark:bg-slate-800;
   }
 
   .admin-panel {
-    @apply rounded-[1.75rem] border border-orange-100 bg-white shadow-soft;
+    @apply rounded-[1.75rem] border border-orange-100 bg-white shadow-soft dark:border-slate-700 dark:bg-slate-800;
   }
 }
 

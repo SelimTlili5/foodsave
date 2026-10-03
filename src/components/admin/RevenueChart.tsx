@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import type { DailyStatistic } from '../../types'
 
@@ -6,9 +7,12 @@ type RevenueChartProps = {
 }
 
 export default function RevenueChart({ data }: RevenueChartProps) {
+  const { i18n, t } = useTranslation()
+  const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR'
+
   const chartData = data.map((item) => ({
     ...item,
-    day: new Date(item.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }),
+    day: new Date(item.date).toLocaleDateString(locale, { day: 'numeric', month: 'short' }),
     revenue: Number(item.revenue.toFixed(0)),
   }))
 
@@ -25,7 +29,7 @@ export default function RevenueChart({ data }: RevenueChartProps) {
           <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
           <XAxis dataKey="day" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
           <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
-          <Tooltip formatter={(value) => [`${Number(value ?? 0)} €`, 'Revenu']} labelStyle={{ color: '#0f172a' }} />
+          <Tooltip formatter={(value) => [`${Number(value ?? 0)} €`, t('admin.revenueLabel')]} labelStyle={{ color: '#0f172a' }} />
           <Area type="monotone" dataKey="revenue" stroke="#f97316" fill="url(#revenueFill)" strokeWidth={3} />
         </AreaChart>
       </ResponsiveContainer>
